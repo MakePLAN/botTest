@@ -1,1 +1,3 @@
-[Jibo SDK & API Documentation](https://developers.jibo.com/sdk/docs/)
+JIBO test integration with NEDB
+
+Make sure to run "npm install" after cloning this project so install all the node modules.
