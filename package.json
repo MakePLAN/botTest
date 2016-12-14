@@ -1,0 +1,18 @@
+{
+  "name": "hello-world",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "behaviorify": "^1.0.0",
+    "husl": "^6.0.1",
+    "jibo": "^3.0.7",
+    "nedb": "^1.8.0",
+    "pixi.js": "^4.0.3",
+    "sleep": "^5.0.0"
+  },
+  "license": "UNLICENSED"
+}
