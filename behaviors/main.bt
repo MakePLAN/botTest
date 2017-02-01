@@ -3,174 +3,63 @@
         "id": 1,
         "class": "Sequence",
         "name": "",
-        "children": [
-            "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb"
-        ],
-        "options": {},
-        "decorators": []
-    },
-    "3": {
-        "id": 3,
-        "class": "LookAt",
-        "name": "",
         "asset-pack": "core",
-        "parent": "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb",
+        "children": [
+            4,
+            6,
+            "e74c40e1-f941-4859-8db6-611cfa77d339"
+        ],
+        "decorators": [],
+        "options": {}
+    },
+    "4": {
+        "id": 4,
+        "class": "PlayAnimation",
+        "name": "Play a greeting",
+        "asset-pack": "core",
+        "parent": 1,
         "options": {
-            "getTarget": [
-                "() => {",
-                "\t//behavior to find someone in front of Jibo",
-                "\tlet jibo = require('jibo');\t//get jibo library",
-                "\tlet entity = jibo.lps.getClosestVisualEntity(); //get cloest person",
-                "\t",
-                "\tlet position = {x:.5, y:.1, z:.4};",
-                "\tif (entity && entity.parts.length > 0) {",
-                "\t\tlet raysData = entity.parts[0].value.rays;",
-                "",
-                "\t\tif (raysData !== undefined && raysData.length > 0) {",
-                "",
-                "\t\t\tlet origin = entity.parts[0].value.rays[0].origin;",
-                "\t\t\tlet dir = entity.parts[0].value.rays[0].dir;",
-                "\t\t\t//find the location that jibo needs to be at to directly look at person",
-                "\t\t\tposition\t= {x: dir.x + origin.x, y:dir.y + origin.y, z: dir.z + origin.z};",
-                "\t\t\t//move jibo to that location",
-                "\t\t\temitter.emit('found'); //emit the event that person was found",
-                "\t\t}",
-                "\t}",
-                "\telse {",
-                "\t\t//found no one don't move jibo",
-                "\t\t\tposition = {x: 0.5, y: 0.1, z: 0.4}",
-                "\t\t\t",
-                "\t\t\temitter.emit('nfound'); //emit the event the no one was found",
-                "\t}",
-                "\t",
-                "\t",
-                "\treturn position;",
-                "}"
-            ],
-            "isContinuous": true,
+            "animPath": "greeting.keys",
             "config": [
-                "(lookAt) => {",
-                "  ",
+                "(animation) => {",
                 "}"
             ]
+        }
+    },
+    "6": {
+        "id": 6,
+        "class": "PlayAudio",
+        "name": "Bawhoop",
+        "asset-pack": "core",
+        "parent": 1,
+        "options": {
+            "audioPath": "FX_Bawhoop.mp3"
         }
     },
     "meta": {
         "version": 1
     },
-    "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb": {
-        "id": "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb",
-        "class": "Parallel",
+    "e74c40e1-f941-4859-8db6-611cfa77d339": {
+        "id": "e74c40e1-f941-4859-8db6-611cfa77d339",
+        "class": "ExecuteScript",
         "name": "",
         "options": {
-            "succeedOnOne": false
-        },
-        "asset-pack": "core",
-        "parent": 1,
-        "children": [
-            3,
-            "4c5fe309-3bf7-4328-8d01-f2b522908cc5",
-            "9032b4df-ac90-4b5b-a2b6-e70a54d28760"
-        ],
-        "decorators": [
-            "281232d0-3fff-4b68-8521-8ae8b0202588"
-        ]
-    },
-    "281232d0-3fff-4b68-8521-8ae8b0202588": {
-        "id": "281232d0-3fff-4b68-8521-8ae8b0202588",
-        "class": "WhileCondition",
-        "name": "",
-        "options": {
-            "init": [
+            "exec": [
                 "() => {",
-                "}"
-            ],
-            "conditional": [
-                "() => {",
-                "    return true;",
-                "}"
-            ]
-        },
-        "asset-pack": "core"
-    },
-    "4c5fe309-3bf7-4328-8d01-f2b522908cc5": {
-        "id": "4c5fe309-3bf7-4328-8d01-f2b522908cc5",
-        "class": "TextToSpeech",
-        "name": "",
-        "options": {
-            "words": "Hello!!!",
-            "onWord": [
-                "(word) => {",
+                "    var apiKey = 'dD0SwsmXOxU24hPNPwIuWH'; //change [API_KEY] to your key found at https://ifttt.com/maker",
+                "    var IFTTTMaker = require('iftttmaker')(apiKey);",
+                "    var action = 'jibo_send_email'; //change [EVENT_NAME] to your Maker Event (e.g. jibo_send_mail)",
+                "",
+                "    // Promise",
+                "    IFTTTMaker.send(action, 'hi', 'Im jibo here').then(function () {",
+                "        console.log('Request was sent');",
+                "    }).catch(function (error) {",
+                "        console.log('The request could not be sent:', error);",
+                "    });",
                 "}"
             ]
         },
         "asset-pack": "core",
-        "parent": "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb",
-        "decorators": [
-            "22dda43b-bce3-4afd-8aa2-710be72db39f"
-        ]
-    },
-    "22dda43b-bce3-4afd-8aa2-710be72db39f": {
-        "id": "22dda43b-bce3-4afd-8aa2-710be72db39f",
-        "class": "StartOnEvent",
-        "name": "",
-        "options": {
-            "eventName": "found",
-            "onEvent": [
-                "() => {",
-                "  let nedb = require('nedb'); //NEDB library",
-                "  ",
-                "  var db = new nedb({ filename: __dirname + '/db.json', autoload: true });",
-                "  //initialize db object with file called db.json",
-                "  db.loadDatabase();",
-                "  var result = {result: 'Someone found'};",
-                "  ",
-                "  db.insert(result, function (err, newDoc) {   //insert the updated the data to document",
-                "  ",
-                "  });",
-                "}"
-            ]
-        },
-        "asset-pack": "core"
-    },
-    "9032b4df-ac90-4b5b-a2b6-e70a54d28760": {
-        "id": "9032b4df-ac90-4b5b-a2b6-e70a54d28760",
-        "class": "TextToSpeech",
-        "name": "",
-        "options": {
-            "words": "Where is everyone?",
-            "onWord": [
-                "(word) => {",
-                "}"
-            ]
-        },
-        "asset-pack": "core",
-        "parent": "2bfb1ffa-4b91-40a1-98a5-f9a41592dbcb",
-        "decorators": [
-            "43440b58-e41a-4b02-9bf5-42662821195e"
-        ]
-    },
-    "43440b58-e41a-4b02-9bf5-42662821195e": {
-        "id": "43440b58-e41a-4b02-9bf5-42662821195e",
-        "class": "StartOnEvent",
-        "name": "",
-        "options": {
-            "eventName": "nfound",
-            "onEvent": [
-                "() => {",
-                "  let nedb = require('nedb'); //NEDB library",
-                "  ",
-                "  var db = new nedb({ filename: __dirname + '/db.json', autoload: true });",
-                "  //initialize db object with file called db.json",
-                "  db.loadDatabase();",
-                "  var result = {result: 'No One found'};",
-                "  ",
-                "  db.insert(result, function (err, newDoc) {   //insert the updated the data to document",
-                "  ",
-                "  });",
-                "}"
-            ]
-        },
-        "asset-pack": "core"
+        "parent": 1
     }
 }

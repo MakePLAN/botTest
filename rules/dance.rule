@@ -1,0 +1,5 @@
+TopRule = $* (
+    $danceRule { action = 'dance' }
+);
+
+danceRule = $* dance $*;

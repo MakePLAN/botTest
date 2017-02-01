@@ -1,1 +1,1 @@
-TopRule = $* (hello world){what='hello'} $*;
+TopRule = $* (hello world){action='hello'} $*;
